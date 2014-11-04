@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Babylon.js sample code</title>
+        <!-- Babylon.js -->
+        <script src="http://www.babylonjs.com/hand.minified-1.2.js"></script>
+        <script src="http://www.babylonjs.com/cannon.js"></script>
+        <script src="http://www.babylonjs.com/oimo.js"></script>
+        <script src="http://www.babylonjs.com/babylon.js"></script>
+        <style>
+            html, body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+        </style>
+    </head>
+<body>
+    <span>Player (Blue):</span>
+    <input type="button" value="Up" id="upBlue" />
+    <input type="button" value="Down" id="downBlue" />
+
+    <span style="margin-left: 50px;">Enemy 1 (Red):</span>
+    <input type="button" value="Up" id="upRed" />
+    <input type="button" value="Down" id="downRed" />
+
+    <span style="margin-left: 50px;">Enemy 2 (Purple):</span>
+    <input type="button" value="Up" id="upPurple" />
+    <input type="button" value="Down" id="downPurple" />
+
+    <canvas id="renderCanvas"></canvas>
+    <script type="text/javascript" src="airshipScene.js"></script>
+</body>
+</html>
