@@ -3,8 +3,69 @@ var engine = new BABYLON.Engine(canvas, true);
 
 var createScene = function () {
     var scene = new BABYLON.Scene(engine);
+
+    BABYLON.SceneLoader.ImportMesh("", "assets/", "airship.babylon", scene, function (newMeshes) {
+        var playerShip = newMeshes[0];
+
+        // player/character ship
+        playerShip.id = "player";
+        playerShip.name = "player";
+        playerShip.position.y = 20;
+        playerShip.position.z = -250;
+
+        playerShip.scaling.x = 15;
+        playerShip.scaling.y = 15;
+        playerShip.scaling.z = 15;
+
+        playerShip.rotation.y = -1 * Math.PI / 2;
+    }, null, onError);
+
+    BABYLON.SceneLoader.ImportMesh("", "assets/", "airship_enemy.babylon", scene, function (newMeshes) {
+        var enemy1 = newMeshes[0];
+        var enemy2 = enemy1.clone();
+
+        // enemy1 ship
+        enemy1.id = "enemy1";
+        enemy1.name = "enemy1";
+        enemy1.position.x = 200;
+        enemy1.position.y = 220;
+        enemy1.position.z = 250;
+
+        enemy1.scaling.x = 15;
+        enemy1.scaling.y = 15;
+        enemy1.scaling.z = 15;
+
+        var en1Mat = new BABYLON.StandardMaterial("en1Mat", scene);
+        en1Mat.emissiveColor = new BABYLON.Color3(1, 0, 0);
+        enemy1.material = en1Mat;
+
+        enemy1.rotation.y = -1 * Math.PI / 2;
+
+        // enemy2 ship
+        enemy2.id = "enemy2";
+        enemy2.name = "enemy2";
+        enemy2.position.x = -200;
+        enemy2.position.y = 220;
+        enemy2.position.z = 250;
+
+        enemy2.scaling.x = 15;
+        enemy2.scaling.y = 15;
+        enemy2.scaling.z = 15;
+
+        var en2Mat = new BABYLON.StandardMaterial("en2Mat", scene);
+        en2Mat.emissiveColor = new BABYLON.Color3(1, 0, 1);
+        enemy2.material = en2Mat;
+
+        enemy2.rotation.y = -1 * Math.PI / 2;
+    }, null, onError);
+
+    function onError(err) {
+        console.log(err);
+    }
+
     var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
     camera.setPosition(new BABYLON.Vector3(0, 800, 1300));
+
 
     camera.lowerBetaLimit = 0.1;
     camera.upperBetaLimit = (Math.PI / 2) * 0.99;
@@ -13,53 +74,20 @@ var createScene = function () {
     scene.clearColor = new BABYLON.Color3(0, 0, 0);
 
     // Light
-    var spot = new BABYLON.SpotLight("spot", new BABYLON.Vector3(0, 300, 10), new BABYLON.Vector3(0, -1, 0), 17, 1, scene);
+    var spot = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 500, 10), scene);
     spot.diffuse = new BABYLON.Color3(0.6, 0.5, 0.4);
     spot.specular = new BABYLON.Color3(1, 1, 1);
-    spot.intensity = 0.3;
+    spot.intensity = 1;
 
     // Ground
     var ground = BABYLON.Mesh.CreateGround("ground", 1000, 1000, 1, scene, false);
     var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-    groundMaterial.specularColor = BABYLON.Color3.Black();
     ground.material = groundMaterial;
 
     // create a material with 20% transparency
     var materialAlpha = new BABYLON.StandardMaterial("texture1", scene);
-    materialAlpha.alpha = 0.2;
-
-    // create a red, purple, and blue cylinder
-    var redCylinder = BABYLON.Mesh.CreateCylinder("redCylinder", 80, 40, 40, 10, 1, scene, false);
-    var redMat = new BABYLON.StandardMaterial("ground", scene);
-    redMat.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
-    redMat.specularColor = new BABYLON.Color3(0.4, 0.4, 0.4);
-    redMat.emissiveColor = BABYLON.Color3.Red();
-    redCylinder.material = redMat;
-    redCylinder.position.y = 250;
-    redCylinder.position.x += 200;
-    redCylinder.position.z += 250;
-    redCylinder.rotation.x = Math.PI / 2;
-
-    var purpleCylinder = BABYLON.Mesh.CreateCylinder("purpleCylinder", 80, 40, 40, 10, 1, scene, false);
-    var purpleMat = new BABYLON.StandardMaterial("ground", scene);
-    purpleMat.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
-    purpleMat.specularColor = new BABYLON.Color3(0.4, 0.4, 0.4);
-    purpleMat.emissiveColor = BABYLON.Color3.Purple();
-    purpleCylinder.material = purpleMat;
-    purpleCylinder.position.y = 250;
-    purpleCylinder.position.x -= 200;
-    purpleCylinder.position.z += 250;
-    purpleCylinder.rotation.x = Math.PI / 2;
-
-    var blueCylinder = BABYLON.Mesh.CreateCylinder("blueCylinder", 80, 40, 40, 10, 1, scene, false);
-    var blueMat = new BABYLON.StandardMaterial("ground", scene);
-    blueMat.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
-    blueMat.specularColor = new BABYLON.Color3(0.4, 0.4, 0.4);
-    blueMat.emissiveColor = BABYLON.Color3.Blue();
-    blueCylinder.material = blueMat;
-    blueCylinder.position.y = 50;
-    blueCylinder.position.z -= 250;
-    blueCylinder.rotation.x = Math.PI / 2;
+    materialAlpha.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    materialAlpha.alpha = 0.1;
 
     // create a plane for each level for low, mid and hi with transparency from the material
     var plane1 = BABYLON.Mesh.CreatePlane("low", 1000.0, scene);
@@ -77,8 +105,11 @@ var createScene = function () {
     plane3.position.y = 300;
     plane3.material = materialAlpha;
 
+    spot.excludedMeshes.push(plane1, plane2, plane3);
+
     // Events
     var canvas = engine.getRenderingCanvas();
+    camera.attachControl(canvas);
     var startingPoint;
     var currentMesh;
 
@@ -157,14 +188,14 @@ var createScene = function () {
         }
     }
 
-    document.getElementById("upRed").addEventListener("click", function () { moveUp("redCylinder"); });
-    document.getElementById("downRed").addEventListener("click", function () { moveDown("redCylinder"); });
+    document.getElementById("upRed").addEventListener("click", function () { moveUp("enemy1"); });
+    document.getElementById("downRed").addEventListener("click", function () { moveDown("enemy1"); });
 
-    document.getElementById("upPurple").addEventListener("click", function () { moveUp("purpleCylinder"); });
-    document.getElementById("downPurple").addEventListener("click", function () { moveDown("purpleCylinder"); });
+    document.getElementById("upPurple").addEventListener("click", function () { moveUp("enemy2"); });
+    document.getElementById("downPurple").addEventListener("click", function () { moveDown("enemy2"); });
 
-    document.getElementById("upBlue").addEventListener("click", function () { moveUp("blueCylinder"); });
-    document.getElementById("downBlue").addEventListener("click", function () { moveDown("blueCylinder"); });
+    document.getElementById("upBlue").addEventListener("click", function () { moveUp("player"); });
+    document.getElementById("downBlue").addEventListener("click", function () { moveDown("player"); });
 
     canvas.addEventListener("pointerdown", onPointerDown, false);
     canvas.addEventListener("pointerup", onPointerUp, false);
@@ -175,6 +206,8 @@ var createScene = function () {
         canvas.removeEventListener("pointerup", onPointerUp);
         canvas.removeEventListener("pointermove", onPointerMove);
     }
+
+
 
     return scene;
 };
