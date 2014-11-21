@@ -10,12 +10,12 @@ var createScene = function () {
         // player/character ship
         playerShip.id = "player";
         playerShip.name = "player";
-        playerShip.position.y = 20;
+        playerShip.position.y = -15;
         playerShip.position.z = -250;
 
-        playerShip.scaling.x = 15;
-        playerShip.scaling.y = 15;
-        playerShip.scaling.z = 15;
+        playerShip.scaling.x = 25;
+        playerShip.scaling.y = 25;
+        playerShip.scaling.z = 25;
 
         playerShip.rotation.y = -1 * Math.PI / 2;
     }, null, onError);
@@ -27,13 +27,13 @@ var createScene = function () {
         // enemy1 ship
         enemy1.id = "enemy1";
         enemy1.name = "enemy1";
-        enemy1.position.x = 200;
-        enemy1.position.y = 220;
-        enemy1.position.z = 250;
+        enemy1.position.x = 220;
+        enemy1.position.y = 185;
+        enemy1.position.z = 350;
 
-        enemy1.scaling.x = 15;
-        enemy1.scaling.y = 15;
-        enemy1.scaling.z = 15;
+        enemy1.scaling.x = 25;
+        enemy1.scaling.y = 25;
+        enemy1.scaling.z = 25;
 
         var en1Mat = new BABYLON.StandardMaterial("en1Mat", scene);
         en1Mat.emissiveColor = new BABYLON.Color3(1, 0, 0);
@@ -44,13 +44,13 @@ var createScene = function () {
         // enemy2 ship
         enemy2.id = "enemy2";
         enemy2.name = "enemy2";
-        enemy2.position.x = -200;
-        enemy2.position.y = 220;
-        enemy2.position.z = 250;
+        enemy2.position.x = -350;
+        enemy2.position.y = 85;
+        enemy2.position.z = 380;
 
-        enemy2.scaling.x = 15;
-        enemy2.scaling.y = 15;
-        enemy2.scaling.z = 15;
+        enemy2.scaling.x = 25;
+        enemy2.scaling.y = 25;
+        enemy2.scaling.z = 25;
 
         var en2Mat = new BABYLON.StandardMaterial("en2Mat", scene);
         en2Mat.emissiveColor = new BABYLON.Color3(1, 0, 1);
@@ -64,9 +64,7 @@ var createScene = function () {
     }
 
     var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
-    camera.setPosition(new BABYLON.Vector3(0, 800, 1300));
-
-
+    camera.setPosition(new BABYLON.Vector3(1400, 1200, 1300));
     camera.lowerBetaLimit = 0.1;
     camera.upperBetaLimit = (Math.PI / 2) * 0.99;
     camera.lowerRadiusLimit = 150;
@@ -80,8 +78,9 @@ var createScene = function () {
     spot.intensity = 1;
 
     // Ground
-    var ground = BABYLON.Mesh.CreateGround("ground", 1000, 1000, 1, scene, false);
+    var ground = BABYLON.Mesh.CreateGround("ground", 2000, 2000, 1, scene, false);
     var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+    groundMaterial.diffuseTexture = new BABYLON.Texture("assets/ground.jpg", scene);
     ground.material = groundMaterial;
 
     // create a material with 20% transparency
@@ -90,17 +89,17 @@ var createScene = function () {
     materialAlpha.alpha = 0.1;
 
     // create a plane for each level for low, mid and hi with transparency from the material
-    var plane1 = BABYLON.Mesh.CreatePlane("low", 1000.0, scene);
+    var plane1 = BABYLON.Mesh.CreatePlane("low", 2000.0, scene);
     plane1.rotation.x = Math.PI / 2;
     plane1.position.y = 100;
     plane1.material = materialAlpha;
 
-    var plane2 = BABYLON.Mesh.CreatePlane("mid", 1000.0, scene);
+    var plane2 = BABYLON.Mesh.CreatePlane("mid", 2000.0, scene);
     plane2.rotation.x = Math.PI / 2;
     plane2.position.y = 200;
     plane2.material = materialAlpha;
 
-    var plane3 = BABYLON.Mesh.CreatePlane("hi", 1000.0, scene);
+    var plane3 = BABYLON.Mesh.CreatePlane("hi", 2000.0, scene);
     plane3.rotation.x = Math.PI / 2;
     plane3.position.y = 300;
     plane3.material = materialAlpha;
@@ -175,7 +174,7 @@ var createScene = function () {
     var moveUp = function (name) {
         var obj = scene.getMeshByName(name);
 
-        if (obj.position.y < 200) {
+        if (obj.position.y < 180) {
             obj.position.y += 100
         }
     }
@@ -183,7 +182,7 @@ var createScene = function () {
     var moveDown = function (name) {
         var obj = scene.getMeshByName(name);
 
-        if (obj.position.y > 100) {
+        if (obj.position.y > 80) {
             obj.position.y -= 100
         }
     }
