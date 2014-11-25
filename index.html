@@ -16,6 +16,7 @@
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                background-color: gray;
             }
 
             #renderCanvas {
@@ -23,20 +24,50 @@
                 height: 100%;
                 touch-action: none;
             }
+            .controls {
+                float: left;
+                width: 400px;
+                background-color: gray;
+                color: white;
+            }
+            .up {
+                margin-left: 117px;
+            }
+            .left {
+                margin-left: 45px;
+            }
+            .right {
+                margin-left: 10px;
+            }
+            .down {
+                margin-left: 105px;
+            }
         </style>
     </head>
 <body>
-    <span>Player (Brown):</span>
-    <input type="button" value="Up" id="upBlue" />
-    <input type="button" value="Down" id="downBlue" />
+    <div class="controls">
+        <span>Player (<span style="color: rgb(193, 186, 172);">Brown</span>):</span><br />
+        <input class="up" type="button" value="Up" id="upBrown" /><br />
+        <input class="left" type="button" value="Rotate Left" id="leftBrown" />
+        <input class="right" type="button" value="Rotate Right" id="rightBrown" /><br />
+        <input class="down" type="button" value="Down" id="downBrown" />
+    </div>
 
-    <span style="margin-left: 50px;">Enemy 1 (Red):</span>
-    <input type="button" value="Up" id="upRed" />
-    <input type="button" value="Down" id="downRed" />
+    <div class="controls">
+        <span>Enemy 1 (<span style="color: rgb(255, 25, 25);">Red</span>):</span><br />
+        <input class="up" type="button" value="Up" id="upRed" /><br />
+        <input class="left" type="button" value="Rotate Left" id="leftRed" />
+        <input class="right" type="button" value="Rotate Right" id="rightRed" /><br />
+        <input class="down" type="button" value="Down" id="downRed" />
+    </div>
 
-    <span style="margin-left: 50px;">Enemy 2 (Purple):</span>
-    <input type="button" value="Up" id="upPurple" />
-    <input type="button" value="Down" id="downPurple" />
+    <div class="controls">
+        <span>Enemy 2 (<span style="color: rgb(255, 48, 255);">Purple</span>):</span><br />
+        <input class="up" type="button" value="Up" id="upPurple" /><br />
+        <input class="left" type="button" value="Rotate Left" id="leftPurple" />
+        <input class="right" type="button" value="Rotate Right" id="rightPurple" /><br />
+        <input class="down" type="button" value="Down" id="downPurple" />
+    </div>
 
     <canvas id="renderCanvas"></canvas>
     <script type="text/javascript" src="airshipScene.js"></script>

@@ -187,14 +187,33 @@ var createScene = function () {
         }
     }
 
+    var rotLeft = function (name) {
+        var obj = scene.getMeshByName(name);
+
+        obj.rotation.y += -1 * Math.PI / 4
+    }
+
+    var rotRight = function (name) {
+        var obj = scene.getMeshByName(name);
+
+        obj.rotation.y -= -1 * Math.PI / 4
+    }
+
+
     document.getElementById("upRed").addEventListener("click", function () { moveUp("enemy1"); });
     document.getElementById("downRed").addEventListener("click", function () { moveDown("enemy1"); });
+    document.getElementById("leftRed").addEventListener("click", function () { rotLeft("enemy1"); });
+    document.getElementById("rightRed").addEventListener("click", function () { rotRight("enemy1"); });
 
     document.getElementById("upPurple").addEventListener("click", function () { moveUp("enemy2"); });
     document.getElementById("downPurple").addEventListener("click", function () { moveDown("enemy2"); });
+    document.getElementById("leftPurple").addEventListener("click", function () { rotLeft("enemy2"); });
+    document.getElementById("rightPurple").addEventListener("click", function () { rotRight("enemy2"); });
 
-    document.getElementById("upBlue").addEventListener("click", function () { moveUp("player"); });
-    document.getElementById("downBlue").addEventListener("click", function () { moveDown("player"); });
+    document.getElementById("upBrown").addEventListener("click", function () { moveUp("player"); });
+    document.getElementById("downBrown").addEventListener("click", function () { moveDown("player"); });
+    document.getElementById("leftBrown").addEventListener("click", function () { rotLeft("player"); });
+    document.getElementById("rightBrown").addEventListener("click", function () { rotRight("player"); });
 
     canvas.addEventListener("pointerdown", onPointerDown, false);
     canvas.addEventListener("pointerup", onPointerUp, false);
